@@ -1,0 +1,86 @@
+import React, { useEffect } from "react";
+
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
+
+import MetaData from "../layout/MetaData";
+import Loader from "../layout/Loader";
+import Sidebar from "./Sidebar";
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { useState } from "react";
+import { useAlert } from 'react-alert'
+import { getSellerProducts } from "../../actions/ProductActions";
+
+const SupplyDashboard = () => {
+  const dispatch=useDispatch()
+  const alert = useAlert();
+  const { products,loading } = useSelector(state => state.products);
+
+  let OutOfStock = 0;
+  products.forEach(product => {
+    if (product.stock === 0) OutOfStock += 1;
+  })
+  useEffect(() => {
+    dispatch(getSellerProducts());
+  }, [dispatch])
+
+
+
+
+  return (
+    <>
+      <div className="row">
+        <div className="col-12 col-md-2">
+          <Sidebar />
+        </div>
+
+        <div className="col-12 col-md-10">
+          <h1 className="my-4">Dashboard</h1>
+          {loading ? <Loader /> :
+            <>
+              <MetaData title={'Admin Dashboard'} />
+              <div className="row pr-4">
+
+
+                <div className="col-xl-4 col-sm-6 mb-3">
+                  <Card sx={{ maxWidth: 345, backgroundColor: '#17a2b8' }}>
+                    <CardContent>
+                      <Typography className='card-font-size' gutterBottom variant="h5" component="div" style={{ color: 'white' }}>
+                        Products
+                      </Typography>
+                      <Typography className='card-font-size' variant="body2" style={{ color: 'white', fontWeight: 'bold', fontSize: '24px' }}>
+                        {products && products.length}
+                      </Typography>
+                    </CardContent>
+                    
+                  </Card>
+                </div>
+                <div className="col-xl-4 col-sm-6 mb-3">
+                  <Card sx={{ maxWidth: 345, backgroundColor: '#ffc107' }}>
+                    <CardContent>
+                      <Typography className='card-font-size' gutterBottom variant="h5" component="div" style={{ color: 'white' }}>
+                        Out Of Stock
+                      </Typography>
+                      <Typography className='card-font-size' variant="body2" style={{ color: 'white', fontWeight: 'bold', fontSize: '24px' }}>
+                        {OutOfStock}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
+
+              </div>
+            </>
+          }
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default SupplyDashboard;
