@@ -1,4 +1,6 @@
 Walmart is a complete E-commerce system here user can buy their necessary products,one the other hand seller can do their business using this platform and add new product for sell.
+User-Friendly Product Navigation.Efficient Search and Filtering Functionality.Secure and Convenient Payment Process.Customer Service Accessibility.User-Centric Account Management.Seller can add new prodect and Admin involved to handle the entire e-commerce site.
+
 
 # walmart E-commerce Project
 
